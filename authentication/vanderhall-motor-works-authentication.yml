@@ -1,0 +1,65 @@
+generated: '2026-09-02'
+method: probed
+source: https://portal.vanderhallusa.com/.well-known/oauth-authorization-server
+note: >-
+  Derived entirely from the two live OAuth discovery documents Vanderhall serves at
+  portal.vanderhallusa.com — there is no OpenAPI to read securitySchemes from and no public
+  authentication documentation page anywhere on the Vanderhall estate.
+schemes:
+- name: mcp_oauth2
+  type: oauth2
+  applies_to: https://portal.vanderhallusa.com/mcp
+  flows:
+    authorizationCode:
+      authorizationUrl: https://portal.vanderhallusa.com/shared/oauth_authorize
+      tokenUrl: https://portal.vanderhallusa.com/oauth/token
+      refreshUrl: https://portal.vanderhallusa.com/oauth/token
+      scopes:
+        mcp: Access the Vanderhall Admin Portal MCP endpoint.
+  pkce:
+    required_methods: [S256]
+  client_authentication:
+    token_endpoint_auth_methods: [none]
+    note: >-
+      Public clients only — the authorization server advertises `none` as its sole token-endpoint auth
+      method, which is the expected posture for MCP clients paired with PKCE and dynamic registration.
+  dynamic_client_registration:
+    supported: true
+    spec: RFC 7591
+    endpoint: https://portal.vanderhallusa.com/oauth/register
+    observed: >-
+      A GET returns HTTP 400 {"error":"invalid_client_metadata","error_description":"redirect_uris is
+      required and must be a non-empty array"} — the endpoint is live and validating.
+  bearer_token:
+    transport: Authorization header
+    observed_failure: >-
+      Requests without a token return HTTP 200 carrying JSON-RPC error -32001 "Unauthorized: missing
+      bearer token". Note that the transport status is 200, not 401 — a client must read the JSON-RPC
+      error envelope, not the HTTP status, to detect an auth failure.
+discovery:
+- spec: RFC 8414 OAuth 2.0 Authorization Server Metadata
+  url: https://portal.vanderhallusa.com/.well-known/oauth-authorization-server
+  status: 200
+- spec: RFC 9728 OAuth 2.0 Protected Resource Metadata
+  url: https://portal.vanderhallusa.com/.well-known/oauth-protected-resource
+  status: 200
+- spec: OpenID Connect Discovery
+  url: https://portal.vanderhallusa.com/.well-known/openid-configuration
+  status: 404
+  note: Plain OAuth 2.1-style authorization only; no OIDC layer is advertised.
+other_surfaces:
+- surface: https://dealer.vanderhallusa.com/
+  auth: HTML form login (username + password), no public API auth documented
+  status: 200
+- surface: https://portal.vanderhallusa.com/
+  auth: HTML form login (username + password)
+  status: 200
+- surface: https://dealer.vanderhallusa.com/api
+  auth: unknown
+  status: 200
+  note: >-
+    An undocumented internal router that answers "INVALID API CALL. api" (21 bytes) at /api and /api/
+    and 404s on every child path probed (/api/v1, /api/dealers, /api/inventory, /api/help, /api/docs).
+    No contract, no reference, no auth scheme is published for it; recorded as observed, not derived.
+docs: null
+docs_note: Vanderhall publishes no authentication documentation page.

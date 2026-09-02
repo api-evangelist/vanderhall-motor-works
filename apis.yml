@@ -1,18 +1,58 @@
 aid: vanderhall-motor-works
 name: Vanderhall Motor Works
-description: 'Vanderhall Motor Works is a company surfaced via the API Evangelist harvest backlog (source:
-  secondary-market) and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Vanderhall Motor Works is a privately held American vehicle manufacturer founded in 2010 by Steve
+  Hall and headquartered in Provo, Utah. The company hand-builds three-wheeled autocycles — the
+  Laguna, Venice, Venice Speedster, Carmel and Santarosa — alongside the all-electric Edison and the
+  quad-motor Brawley off-road UTV, selling through an independent dealer network rather than direct
+  to consumers. Its software footprint is internal rather than commercial: Vanderhall runs a dealer
+  portal, an admin portal and a parts/accessory shop on its own domain, and the admin portal
+  publishes an OAuth-protected Model Context Protocol (MCP) endpoint at
+  https://portal.vanderhallusa.com/mcp with RFC 8414 authorization-server metadata, RFC 9728
+  protected-resource metadata and RFC 7591 dynamic client registration. There is no public developer
+  program, no published OpenAPI, and no public API reference.
+image: https://dealer.vanderhallusa.com/android-icon-192x192.png
 url: https://raw.githubusercontent.com/api-evangelist/vanderhall-motor-works/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-09-02'
 modified: '2026-09-02'
 tags:
 - Company
-apis: []
+- Automotive
+- Manufacturing
+- Electric Vehicles
+- Powersports
+- Autocycles
+- Dealer Network
+- Model Context Protocol
+- Utah
+apis:
+- name: Vanderhall Admin Portal MCP Server
+  description: >-
+    An OAuth-protected Model Context Protocol endpoint served from the Vanderhall Admin Portal at
+    https://portal.vanderhallusa.com/mcp. The endpoint is live and speaks JSON-RPC 2.0, but every
+    method — including tools/list and initialize — returns -32001 "Unauthorized: missing bearer
+    token" without a token, so the tool set and its input schemas are not publicly discoverable.
+    Authorization is described by RFC 8414 authorization-server metadata and RFC 9728
+    protected-resource metadata at the portal's /.well-known/ paths: authorization code with PKCE
+    (S256), dynamic client registration, refresh tokens, and a single scope, `mcp`.
+  humanURL: https://portal.vanderhallusa.com/
+  baseURL: https://portal.vanderhallusa.com/mcp
+  tags:
+  - Model Context Protocol
+  - OAuth
+  - Dealer Operations
+  properties:
+  - type: MCPServer
+    url: mcp/vanderhall-motor-works-mcp.yml
+  - type: Authentication
+    url: authentication/vanderhall-motor-works-authentication.yml
+  - type: OAuthScopes
+    url: scopes/vanderhall-motor-works-scopes.yml
+  - type: ErrorCatalog
+    url: errors/vanderhall-motor-works-problem-types.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +60,43 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://www.nasdaqprivatemarket.com/
+  url: https://vanderhallusa.com/
+- type: Login
+  url: https://dealer.vanderhallusa.com/
+- type: Support
+  url: https://dealer.vanderhallusa.com/contact/
+- type: PrivacyPolicy
+  url: https://vanderhallusa.com/privacy-policy-2023/
+- type: GitHubOrganization
+  url: https://github.com/vanderhall
+- type: MCPServer
+  url: mcp/vanderhall-motor-works-mcp.yml
+- type: WellKnown
+  url: well-known/vanderhall-motor-works-well-known.yml
+- type: Authentication
+  url: authentication/vanderhall-motor-works-authentication.yml
+- type: OAuthScopes
+  url: scopes/vanderhall-motor-works-scopes.yml
+- type: Conformance
+  url: conformance/vanderhall-motor-works-conformance.yml
+- type: ErrorCatalog
+  url: errors/vanderhall-motor-works-problem-types.yml
+- type: Conventions
+  url: conventions/vanderhall-motor-works-conventions.yml
+- type: Lifecycle
+  url: lifecycle/vanderhall-motor-works-lifecycle.yml
+- type: RateLimits
+  url: rate-limits/vanderhall-motor-works-rate-limits.yml
+- type: Plans
+  url: plans/vanderhall-motor-works-plans-pricing.yml
+- type: Packages
+  url: packages/vanderhall-motor-works-packages.yml
+- type: LLMsTxt
+  url: llms/vanderhall-motor-works-llms.txt
+- type: DomainSecurity
+  url: security/vanderhall-motor-works-domain-security.yml
+x-enrichment:
+  date: '2026-09-02'
+  status: enriched
+  artifacts_added: 15
+  pass: local-v1

@@ -1,0 +1,27 @@
+generated: '2026-09-02'
+method: searched
+source: >-
+  Registry searches run 2026-09-02 — registry.npmjs.org search for "vanderhall" (0 results),
+  pypi.org/pypi/vanderhall/json (404) — plus the github.com/vanderhall organization (verified via the
+  GitHub API as "Vanderhall Motor Works", created 2020-10-22, 1 public repository: App-libraries,
+  described as "Libraries We Use", i.e. third-party dependencies rather than a published client).
+package_count: 0
+packages: []
+official_sdk_count: 0
+note: >-
+  Vanderhall publishes no first-party client libraries in any public registry. No npm, PyPI, RubyGems,
+  Packagist, crates.io, NuGet, Maven Central or Go module package attributable to the company was
+  found, and no CDN-distributed browser build either. The company's only public GitHub repository is a
+  collection of third-party libraries it consumes, not an SDK it ships. Because there is no official
+  SDK, no `SDKs` pointer is emitted — the `Packages` pointer records the checked absence, not a
+  presence.
+registries_checked:
+- registry: npm
+  query: https://registry.npmjs.org/-/v1/search?text=vanderhall
+  result: 0 matches
+- registry: pypi
+  query: https://pypi.org/pypi/vanderhall/json
+  result: 404
+- registry: github
+  query: https://api.github.com/orgs/vanderhall
+  result: '200 — org exists, 1 public repo (App-libraries), no client library'

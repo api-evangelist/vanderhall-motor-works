@@ -1,0 +1,48 @@
+generated: '2026-09-02'
+method: probed
+source: >-
+  Error envelopes observed on live unauthenticated requests to https://portal.vanderhallusa.com/mcp
+  and https://portal.vanderhallusa.com/oauth/register, 2026-09-02.
+format: jsonrpc
+format_note: >-
+  Not RFC 9457. The MCP endpoint returns JSON-RPC 2.0 error objects; the OAuth endpoints return the
+  RFC 6749 {"error","error_description"} shape. No application/problem+json was observed anywhere.
+  There is no published error reference to enrich these from — Vanderhall documents no API.
+envelopes:
+- surface: https://portal.vanderhallusa.com/mcp
+  content_type: application/json
+  shape: '{"jsonrpc":"2.0","id":<id|null>,"error":{"code":<int>,"message":"<string>"}}'
+  transport_status_note: >-
+    The HTTP status on an auth failure is 200, NOT 401, and no WWW-Authenticate header is returned. An
+    agent must parse the JSON-RPC error envelope to detect that it is unauthorized; treating a 200 as
+    success will silently swallow the failure. This is the single most consequential runtime detail
+    recorded for this provider.
+- surface: https://portal.vanderhallusa.com/oauth/register
+  content_type: application/json
+  shape: '{"error":"<code>","error_description":"<string>"}'
+  transport_status_note: HTTP 400 on invalid client metadata.
+problem_types:
+- code: -32001
+  surface: mcp
+  title: Unauthorized
+  message: 'Unauthorized: missing bearer token'
+  http_status: 200
+  observed_on: [tools/list, initialize, 'GET /mcp']
+  remediation: >-
+    Register a client at https://portal.vanderhallusa.com/oauth/register, complete the authorization
+    code + PKCE (S256) flow at /shared/oauth_authorize, exchange at /oauth/token for a token carrying
+    the `mcp` scope, and send it as a bearer token.
+  source: observed
+- code: invalid_client_metadata
+  surface: oauth-register
+  title: Invalid client metadata
+  message: redirect_uris is required and must be a non-empty array
+  http_status: 400
+  observed_on: ['GET /oauth/register']
+  remediation: >-
+    POST an RFC 7591 client-metadata document that includes a non-empty redirect_uris array.
+  source: observed
+coverage_note: >-
+  This catalog contains only errors actually elicited from the live endpoints without credentials. The
+  full error surface of the MCP tools is behind the same OAuth wall as the tool list and has NOT been
+  guessed.

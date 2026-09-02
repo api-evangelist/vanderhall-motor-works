@@ -1,0 +1,84 @@
+generated: '2026-09-02'
+method: probed
+source: >-
+  Live probes of https://portal.vanderhallusa.com/.well-known/oauth-authorization-server,
+  /.well-known/oauth-protected-resource, /oauth/register and the MCP endpoint itself, 2026-09-02.
+note: >-
+  Every entry below is asserted from an observed response, not from a marketing claim — Vanderhall
+  makes no published compliance or standards claims anywhere on its public estate.
+standards:
+- id: oauth2
+  name: OAuth 2.0 (RFC 6749)
+  conforms: true
+  evidence: >-
+    Authorization-server metadata advertises response_types_supported ["code"] and
+    grant_types_supported ["authorization_code","refresh_token"] with live authorization, token and
+    registration endpoints.
+- id: rfc8414
+  name: OAuth 2.0 Authorization Server Metadata
+  conforms: true
+  evidence: >-
+    GET https://portal.vanderhallusa.com/.well-known/oauth-authorization-server -> 200
+    application/json carrying issuer, authorization_endpoint, token_endpoint, registration_endpoint,
+    response_types_supported, grant_types_supported, code_challenge_methods_supported,
+    token_endpoint_auth_methods_supported and scopes_supported.
+- id: rfc9728
+  name: OAuth 2.0 Protected Resource Metadata
+  conforms: true
+  evidence: >-
+    GET https://portal.vanderhallusa.com/.well-known/oauth-protected-resource -> 200
+    application/json with resource=https://portal.vanderhallusa.com/mcp and authorization_servers
+    naming the same issuer. A negative-control path on the same host returns 404, so this is a real
+    document and not a path-echoing catch-all.
+- id: rfc7636
+  name: PKCE (Proof Key for Code Exchange)
+  conforms: true
+  evidence: code_challenge_methods_supported = ["S256"] in the authorization-server metadata.
+- id: rfc7591
+  name: OAuth 2.0 Dynamic Client Registration
+  conforms: true
+  evidence: >-
+    registration_endpoint published, and a request without client metadata returns HTTP 400
+    {"error":"invalid_client_metadata","error_description":"redirect_uris is required and must be a
+    non-empty array"} — the RFC 7591 error code, correctly shaped.
+- id: mcp-authorization
+  name: Model Context Protocol authorization profile
+  conforms: true
+  evidence: >-
+    The MCP resource declares itself via RFC 9728 protected-resource metadata pointing at an RFC 8414
+    authorization server with dynamic registration, PKCE S256 and public-client token auth — the
+    discovery chain the MCP authorization specification prescribes.
+- id: jsonrpc2
+  name: JSON-RPC 2.0
+  conforms: true
+  evidence: >-
+    POST tools/list and POST initialize both return {"jsonrpc":"2.0","id":1,"error":{"code":-32001,
+    "message":"..."}} — a well-formed JSON-RPC 2.0 error object with an implementation-defined code.
+- id: oidc
+  name: OpenID Connect Discovery
+  conforms: false
+  evidence: /.well-known/openid-configuration -> 404 on every Vanderhall host probed.
+- id: rfc9457
+  name: RFC 9457 Problem Details
+  conforms: false
+  evidence: >-
+    No application/problem+json response was observed on any Vanderhall surface; the MCP endpoint uses
+    the JSON-RPC error envelope and the OAuth endpoints use the RFC 6749 error/error_description shape.
+- id: rfc9116
+  name: security.txt
+  conforms: false
+  evidence: /.well-known/security.txt -> 404 on portal, dealer and shop hosts.
+domain_standards:
+- id: null
+  name: null
+  conforms: false
+  evidence: >-
+    Vanderhall's market is on-highway autocycles and off-road UTVs sold through a dealer network. Its
+    only machine-readable surface is an internal admin-portal MCP endpoint, and nothing in it declares
+    an automotive-retail domain standard (no STAR/OpenTrack dealer-DMS message set, no ISO 20022, no
+    EDI/X12 transaction sets, no SCIM/OData/OpenRTB shape). Reward-only dimension — no standard was
+    invented to fill the slot, and none is claimed.
+certifications: []
+certifications_note: >-
+  No trust center, no SOC 2 / ISO 27001 / PCI / HIPAA / FedRAMP claim, and no compliance page was found
+  on any Vanderhall host. No `Compliance` pointer is emitted.

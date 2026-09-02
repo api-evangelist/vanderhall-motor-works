@@ -1,0 +1,122 @@
+generated: '2026-09-02'
+method: searched
+source: >-
+  Named-path probes of every Vanderhall host reachable from apis.yml — vanderhallusa.com (marketing),
+  portal.vanderhallusa.com (admin portal / MCP host), dealer.vanderhallusa.com (dealer portal) and
+  shop.vanderhallusa.com (parts store) — run 2026-09-02 with a browser User-Agent.
+notes: >-
+  Two real documents were found, both on the admin-portal host and both serving the MCP endpoint's
+  authorization story: RFC 8414 authorization-server metadata and RFC 9728 protected-resource
+  metadata. Everything else 404s. The marketing host www/apex vanderhallusa.com is behind a SiteGround
+  captcha (`sg-captcha: challenge`) that answers HTTP 202 with a 169-byte meta-refresh shell for EVERY
+  path including a random negative control, so it is a path-echoing catch-all: no document on that
+  host is credited and no pointer is emitted for it.
+hosts:
+- host: https://portal.vanderhallusa.com
+  path_echo_control: passed
+  soft_404_control:
+    path: /.well-known/vhmw-negctl-7f3ab91c.json
+    status: 404
+    bytes: 287
+  hit_count: 2
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: vanderhall-motor-works-oauth-authorization-server.json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: vanderhall-motor-works-oauth-protected-resource.json
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://dealer.vanderhallusa.com
+  path_echo_control: passed
+  soft_404_control:
+    path: /.well-known/vhmw-negctl-7f3ab91c.json
+    status: 404
+    bytes: 287
+  hit_count: 0
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://shop.vanderhallusa.com
+  path_echo_control: passed
+  soft_404_control:
+    path: /.well-known/vhmw-negctl-7f3ab91c.json
+    status: 404
+    bytes: 285
+  hit_count: 0
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://www.vanderhallusa.com
+  path_echo_control: failed
+  note: >-
+    Every path, including /.well-known/vhmw-negative-control-7f3ab91c.json, returns HTTP 202 with the
+    same 169-198 byte SiteGround captcha meta-refresh shell (response header `sg-captcha: challenge`).
+    This host is a catch-all under challenge; no document on it can be credited and none was saved.
+  hit_count: 0
+  documents:
+  - path: /.well-known/vhmw-negative-control-7f3ab91c.json
+    status: 202
+  - path: /.well-known/security.txt
+    status: 202
+  - path: /.well-known/openid-configuration
+    status: 202
+  - path: /.well-known/oauth-authorization-server
+    status: 202
+  - path: /.well-known/oauth-protected-resource
+    status: 202
+  - path: /.well-known/api-catalog
+    status: 202
+  - path: /.well-known/ai-plugin.json
+    status: 202
+  - path: /.well-known/aauth-resource.json
+    status: 202
+  - path: /.well-known/agent-card.json
+    status: 202
+  - path: /.well-known/agent.json
+    status: 202

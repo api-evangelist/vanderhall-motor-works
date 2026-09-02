@@ -1,0 +1,14 @@
+generated: '2026-09-02'
+method: searched
+source: >-
+  Search of the Vanderhall public estate (vanderhallusa.com, dealer.vanderhallusa.com,
+  shop.vanderhallusa.com, portal.vanderhallusa.com) for any API or developer pricing page, 2026-09-02.
+plan_count: 0
+plans: []
+note: >-
+  Vanderhall sells vehicles and parts, not API access. There is no developer program, no API pricing
+  page, no self-serve sign-up for the MCP endpoint, and no "contact sales" API tier. Access to the
+  only machine-readable surface — the Admin Portal MCP endpoint — is a function of holding a
+  Vanderhall Admin Portal account, which is an internal/dealer relationship rather than a purchasable
+  plan. Vehicle MSRPs and accessory prices published on the marketing site are product pricing and are
+  deliberately NOT recorded here as API plans. An honest zero.

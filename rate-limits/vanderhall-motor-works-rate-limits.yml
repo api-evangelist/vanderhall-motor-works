@@ -1,0 +1,17 @@
+generated: '2026-09-02'
+method: probed
+source: >-
+  Response headers observed on live requests to https://portal.vanderhallusa.com/mcp,
+  https://portal.vanderhallusa.com/oauth/register and https://dealer.vanderhallusa.com/api,
+  2026-09-02, plus a search of the Vanderhall estate for any published limits.
+limit_count: 0
+rate_limits: []
+headers_observed: []
+exhaustion_status: null
+note: >-
+  Vanderhall documents no rate limits, and none were observable. No X-RateLimit-*, RateLimit-* or
+  Retry-After header appeared on any probed response from any Vanderhall host, and no 429 was
+  elicited. The only machine-readable surface is an OAuth-gated MCP endpoint that rejects anonymous
+  calls before any quota would be consumed, so an unauthenticated probe cannot establish whether
+  limits exist behind the wall. An honest zero: limits are undocumented and unsignalled, which is
+  itself the finding an agent needs — there is no runtime backpressure signal to react to.

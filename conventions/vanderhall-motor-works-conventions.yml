@@ -1,0 +1,71 @@
+generated: '2026-09-02'
+method: probed
+source: >-
+  Live probes of the Vanderhall Admin Portal MCP endpoint and its OAuth discovery documents,
+  2026-09-02. Vanderhall publishes no developer documentation, so nothing here is quoted from a docs
+  page and nothing has been assumed from convention.
+auth:
+  style: oauth2-bearer
+  detail: >-
+    Authorization code + PKCE (S256) against https://portal.vanderhallusa.com, single scope `mcp`,
+    public clients (token_endpoint_auth_methods = ["none"]), dynamic client registration available.
+  cross_ref: authentication/vanderhall-motor-works-authentication.yml
+transport:
+  protocol: JSON-RPC 2.0 over HTTPS POST
+  endpoint: https://portal.vanderhallusa.com/mcp
+  accept: application/json, text/event-stream
+  session: >-
+    The host sets a PHPSESSID cookie (HttpOnly, Max-Age 7200) on every request; it is not required for
+    the JSON-RPC call to be accepted and appears to be the surrounding PHP application's, not MCP's.
+idempotency:
+  supported: unknown
+  header: null
+  detail: >-
+    Not determinable. No idempotency key header is documented and the tool set — which is where any
+    write operations would live — is behind OAuth. No `Idempotency` pointer is emitted, because
+    asserting one would credit Vanderhall with a guarantee it has never published.
+pagination:
+  style: unknown
+  detail: No public operation surface to observe pagination on.
+versioning:
+  scheme: unknown
+  detail: >-
+    No version segment in the endpoint path (/mcp, not /v1/mcp), no version header observed, and no
+    published versioning policy. MCP protocol version negotiation happens inside `initialize`, which
+    is auth-gated.
+error_envelope:
+  shape: JSON-RPC 2.0 error object
+  critical_note: >-
+    Auth failures are returned with HTTP 200 and no WWW-Authenticate header. Status-code-only error
+    handling will read an unauthorized response as a success.
+  cross_ref: errors/vanderhall-motor-works-problem-types.yml
+rate_limit_signaling:
+  headers_observed: []
+  detail: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After header was returned on any probed response, and no
+    limits are documented.
+  cross_ref: rate-limits/vanderhall-motor-works-rate-limits.yml
+request_id_tracing:
+  supported: false
+  detail: No request-id or trace header was returned on any probed response.
+dry_run_mode:
+  supported: unknown
+  grade: unknown
+  detail: >-
+    Cannot be established without the tool list. Not marked `na` — this endpoint is an ADMIN portal
+    surface and therefore very likely to carry write operations, so claiming "no write surface" would
+    be a guess in the provider's favour.
+reversibility:
+  grade: unknown
+  applies: unknown
+  operations: []
+  detail: >-
+    Unresolvable from outside. The MCP tool list, which is where any cancel/void/refund/restore
+    operation and its window would be visible, returns -32001 "Unauthorized: missing bearer token"
+    to anonymous callers, and Vanderhall publishes no documentation that states a reversal window for
+    any operation. No window is asserted here — inventing one is the single error in this pipeline
+    that could cost a user real money. This is recorded as `unknown`, not `na`: an admin portal is a
+    write surface by nature, so the honest reading is "not disclosed", not "does not apply".
+  what_would_resolve_it: >-
+    An authenticated tools/list against https://portal.vanderhallusa.com/mcp, or any published MCP
+    tool reference from Vanderhall.

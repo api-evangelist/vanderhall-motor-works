@@ -1,0 +1,33 @@
+generated: '2026-09-02'
+method: searched
+source: >-
+  Searches of the Vanderhall public estate plus direct probes of status.vanderhallusa.com,
+  trust.vanderhallusa.com, and the portal/dealer/shop hosts, 2026-09-02.
+versioning:
+  policy_url: null
+  scheme: none-published
+  note: >-
+    No version segment in the MCP endpoint path and no published versioning policy anywhere on the
+    Vanderhall estate.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: >-
+    No deprecation policy, and no Sunset or Deprecation response header was returned on any probed
+    endpoint. No `Deprecation` pointer is emitted.
+status_page:
+  url: null
+  note: >-
+    status.vanderhallusa.com does not resolve (NXDOMAIN) and no third-party status page (Statuspage,
+    Instatus, Better Stack) was found for Vanderhall. No `StatusPage` pointer is emitted.
+sla:
+  url: null
+  note: No SLA is published; the MCP surface is an internal admin portal, not a commercial product.
+changelog:
+  url: null
+  note: No dated API or product changelog was found. No `ChangeLog` pointer is emitted.
+deprecated_operations: []
+deprecated_operations_note: >-
+  No OpenAPI exists to derive deprecated operations from, and the MCP tool list is auth-gated.

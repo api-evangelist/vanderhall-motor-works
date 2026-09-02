@@ -1,0 +1,83 @@
+generated: '2026-09-02'
+method: probed
+source: https://portal.vanderhallusa.com/.well-known/oauth-protected-resource
+status: published
+deployment:
+  mode: remote
+  endpoint: https://portal.vanderhallusa.com/mcp
+  auth: oauth
+  verified: probed
+server:
+  name: Vanderhall Admin Portal MCP Server
+  transport: http
+  url: https://portal.vanderhallusa.com/mcp
+  protocol: JSON-RPC 2.0
+  host_software: Apache/2.4.29 (Ubuntu), PHP session cookie (PHPSESSID)
+authorization:
+  discovery:
+  - path: /.well-known/oauth-protected-resource
+    spec: RFC 9728 OAuth 2.0 Protected Resource Metadata
+    status: 200
+    file: ../well-known/vanderhall-motor-works-oauth-protected-resource.json
+  - path: /.well-known/oauth-authorization-server
+    spec: RFC 8414 OAuth 2.0 Authorization Server Metadata
+    status: 200
+    file: ../well-known/vanderhall-motor-works-oauth-authorization-server.json
+  issuer: https://portal.vanderhallusa.com
+  authorization_endpoint: https://portal.vanderhallusa.com/shared/oauth_authorize
+  token_endpoint: https://portal.vanderhallusa.com/oauth/token
+  registration_endpoint: https://portal.vanderhallusa.com/oauth/register
+  grant_types: [authorization_code, refresh_token]
+  pkce: S256
+  token_endpoint_auth_methods: [none]
+  scopes: [mcp]
+tools: []
+tools_status: auth-gated
+tools_note: >-
+  The live tool set is NOT publicly discoverable and has NOT been guessed. An unauthenticated
+  POST of {"jsonrpc":"2.0","id":1,"method":"tools/list"} to https://portal.vanderhallusa.com/mcp
+  returns HTTP 200 with {"jsonrpc":"2.0","id":1,"error":{"code":-32001,"message":"Unauthorized:
+  missing bearer token"}}; the same is true of `initialize` and of a bare GET. Vanderhall publishes
+  no OpenAPI, no llms.txt and no MCP documentation, so there is no second source to name tools from.
+  Recovering the tool list and its inputSchemas requires an authenticated introspection with a token
+  carrying the `mcp` scope, which in turn requires an account on the Vanderhall Admin Portal.
+x-evidence:
+- fetched: '2026-09-02'
+  url: https://portal.vanderhallusa.com/.well-known/oauth-protected-resource
+  method: GET
+  http_status: 200
+  content_type: application/json
+  note: 'resource = https://portal.vanderhallusa.com/mcp'
+- fetched: '2026-09-02'
+  url: https://portal.vanderhallusa.com/.well-known/oauth-authorization-server
+  method: GET
+  http_status: 200
+  content_type: application/json
+- fetched: '2026-09-02'
+  url: https://portal.vanderhallusa.com/mcp
+  method: POST tools/list
+  http_status: 200
+  content_type: application/json
+  note: 'JSON-RPC error -32001 Unauthorized: missing bearer token'
+- fetched: '2026-09-02'
+  url: https://portal.vanderhallusa.com/mcp
+  method: POST initialize
+  http_status: 200
+  content_type: application/json
+  note: 'JSON-RPC error -32001 Unauthorized: missing bearer token'
+- fetched: '2026-09-02'
+  url: https://portal.vanderhallusa.com/oauth/register
+  method: GET
+  http_status: 400
+  content_type: application/json
+  note: >-
+    invalid_client_metadata / "redirect_uris is required and must be a non-empty array" — the RFC 7591
+    dynamic client registration endpoint is live and enforcing metadata validation.
+x-ownership:
+  verdict: confirmed
+  rationale: >-
+    The endpoint, its issuer, and both discovery documents are all served from
+    portal.vanderhallusa.com, a subdomain of Vanderhall Motor Works' own registered domain, and the
+    portal's HTML <title> is "Vanderhall - Admin Portal" with a "©2026 Vanderhall" footer. Every
+    discovery document names the same host as issuer and resource — no third-party or sibling-brand
+    host appears anywhere in the metadata.
