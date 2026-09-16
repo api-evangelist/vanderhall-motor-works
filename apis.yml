@@ -23,6 +23,16 @@ tags:
 - Automotive
 - Manufacturing
 - Electric Vehicles
+- Power-Sports
+- Autocycles
+- Dealer Network
+- MCP
+- Utah
+tags_raw:
+- Company
+- Automotive
+- Manufacturing
+- Electric Vehicles
 - Powersports
 - Autocycles
 - Dealer Network
@@ -41,6 +51,10 @@ apis:
   humanURL: https://portal.vanderhallusa.com/
   baseURL: https://portal.vanderhallusa.com/mcp
   tags:
+  - MCP
+  - Authentication
+  - Dealer Operations
+  tags_raw:
   - Model Context Protocol
   - OAuth
   - Dealer Operations
