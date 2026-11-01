@@ -64,5 +64,114 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Vanderhall Motor Works is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://www.nasdaqprivatemarket.com/
+Vanderhall Motor Works is a privately held American vehicle manufacturer founded in 2010 by Steve Hall and headquartered in Provo, Utah. The company hand-builds three-wheeled autocycles — the Laguna, Venice, Venice Speedster, Carmel and Santarosa — alongside the all-electric Edison and the quad-motor Brawley off-road UTV, selling through an independent dealer network rather than direct to consumers. Its software footprint is internal rather than commercial: Vanderhall runs a dealer portal, an admin portal and a parts/accessory shop on its own domain, and the admin portal publishes an OAuth-protected Model Context Protocol (MCP) endpoint at https://portal.vanderhallusa.com/mcp with RFC 8414 authorization-server metadata, RFC 9728 protected-resource metadata and RFC 7591 dynamic client registration. There is no public developer program, no published OpenAPI, and no public API reference.
+
+**Areas:** Company · Automotive · Manufacturing · Electric Vehicles · Power-Sports · Autocycles · Dealer Network · MCP · Utah
+
+## Vanderhall Motor Works on APIs.io
+
+Everything profiled for Vanderhall Motor Works is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/vanderhall-motor-works/](https://apis.io/providers/vanderhall-motor-works/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [Vanderhall Admin Portal MCP Server](https://apis.io/apis/vanderhall-motor-works/vanderhall-admin-portal-mcp-server/) — An OAuth-protected Model Context Protocol endpoint served from the Vanderhall Admin Portal at https://portal.vanderhallusa.com/mcp. The endpoint is live and…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [Vanderhall Admin Portal MCP Server](https://apis.io/servers/vanderhall-motor-works/vanderhall-admin-portal-mcp-server/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Vanderhall Motor Works Authentication](https://apis.io/security/vanderhall-motor-works/vanderhall-motor-works-authentication/)
+- [Vanderhall Motor Works Domain Security](https://apis.io/security/vanderhall-motor-works/vanderhall-motor-works-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Vanderhall Motor Works Scopes](https://apis.io/scopes/vanderhall-motor-works/vanderhall-motor-works-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Vanderhall Motor Works Plans Pricing](https://apis.io/plans/vanderhall-motor-works/vanderhall-motor-works-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Vanderhall Motor Works Rate Limits](https://apis.io/rate-limits/vanderhall-motor-works/vanderhall-motor-works-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://vanderhallusa.com/)
+- [Support](https://dealer.vanderhallusa.com/contact/)
+- [Blog](https://vanderhallusa.com/blog/)
+- [Privacy policy](https://vanderhallusa.com/privacy-policy-2023/)
+- [GitHub](https://github.com/vanderhall)
+
+## API Evangelist rating
+
+**Kin Score 16.7** — emerging · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 68.3 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 2.6 |
+| Developer ergonomics | 19.0 |
+| Access clarity | 6.6 |
+
+**Agent readiness 35.6** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | yes |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 27.9** — Energy & Utilities
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/vanderhall-motor-works/](https://apis.io/providers/vanderhall-motor-works/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Vanderhall Motor Works: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/vanderhall-motor-works/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
